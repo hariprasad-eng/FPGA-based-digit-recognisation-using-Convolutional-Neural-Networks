@@ -18,6 +18,7 @@ Hardware Deployment on PYNQ-Z2
 
 The PYNQ-Z2 board contains a ZYNQ-7000 SoC — a chip with two tightly coupled sides: the Processing System (PS), an ARM Cortex-A9 CPU running Linux and Python, and the Programmable Logic (PL), the FPGA fabric configured with a custom CNN accelerator.
 Vivado Block Design
+
 Five IP blocks are wired together in Vivado to form a complete inference pipeline. Each one has a specific job:
 
 
@@ -50,13 +51,13 @@ What happens when you click Predict
 
 
 
-–   The browser sends the drawn digit as a base64 image over HTTP POST to Flask on the ARM.
-–   Flask resizes it to 28×28, normalises to uint8, and stores the 784-byte array in DDR RAM.
-–   The ARM programs the DMA — sets source address, length 784, and fires the start command.
-–   The DMA streams all 784 pixels one byte per clock into axis_cnn_mnist_0 over AXI Stream.
-–   The hardware CNN runs the full pipeline in programmable logic. After 1,279 clock cycles (~25 µs of pure compute) the predicted digit is ready on the output stream.
-–   The DMA captures the 1-byte result and writes it to DDR. The ARM reads it and returns a JSON response to the browser.
-–   The web app shows both predictions side by side — CPU (~360 ms, numpy) and FPGA (~8 ms, hardware) — with a live bar chart and a speedup factor of around 42×.
+1) The browser sends the drawn digit as a base64 image over HTTP POST to Flask on the ARM.)
+Flask resizes it to 28×28, normalises to uint8, and stores the 784-byte array in DDR RAM.
+2) The ARM programs the DMA — sets source address, length 784, and fires the start command.
+3) The DMA streams all 784 pixels one byte per clock into axis_cnn_mnist_0 over AXI Stream.
+4) The hardware CNN runs the full pipeline in programmable logic. After 1,279 clock cycles (~25 µs of pure compute) the predicted     digit is ready on the output stream.
+5) The DMA captures the 1-byte result and writes it to DDR. The ARM reads it and returns a JSON response to the browser.
+6) The web app shows both predictions side by side — CPU (~360 ms, numpy) and FPGA (~8 ms, hardware) — with a live bar chart and a speedup factor of around 42×.
 
 
 Hardware CNN timing (inside axis_cnn_mnist_0)
