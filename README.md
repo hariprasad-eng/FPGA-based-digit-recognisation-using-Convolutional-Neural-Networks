@@ -71,9 +71,9 @@ Cycle  1280       :  reset, ready for next image
 
 Results
 
-Software accuracy  ~96% 
-Hardware accuracy  ~90% 
-CPU inference  ~360 ms  (pure numpy on 32-bit ARM)
-FPGA inference  ~8 ms  (hardware logic at 50 MHz)
-Speedup  ~42× faster than software
-Pipeline length  1,280 clock cycles  =  25.6 µs compute
+1) Software accuracy  ~96% 
+2) Hardware accuracy  ~90% 
+3) CPU inference  ~360 ms  (pure numpy on 32-bit ARM)
+4) FPGA inference  ~8 ms  (hardware logic at 50 MHz)
+5) Speedup  ~42× faster than software
+6) Pipeline length  1,280 clock cycles  =  25.6 µs compute
