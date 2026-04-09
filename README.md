@@ -1,9 +1,9 @@
-##Training the Model
+Training the Model
 
 A small CNN was trained in PyTorch on the MNIST dataset — 60,000 grayscale images of handwritten digits (0–9), each 28×28 pixels. The network was kept deliberately lightweight so the same architecture could later be synthesised directly into FPGA hardware logic.
 
 
-##Network layers
+Network layers
 
 Conv1  1 → 3 feature maps, 5×5 kernel  →  24×24×3
 MaxPool + ReLU  2×2 pooling  →  12×12×3
@@ -14,7 +14,7 @@ Fully Connected  48 → 10 class scores  →  argmax gives predicted digit
 Training runs for around 10 epochs and reaches roughly 96% accuracy on the test set. Because PyTorch has no stable 32-bit ARM build, it cannot be installed on the PYNQ-Z2 directly. Instead, the six weight tensors are extracted into a .npz numpy file using a small script, and the forward pass is re-implemented in pure numpy on the board for software (CPU) inference.
 
 
-##Hardware Deployment on PYNQ-Z2
+Hardware Deployment on PYNQ-Z2
 
 The PYNQ-Z2 board contains a ZYNQ-7000 SoC — a chip with two tightly coupled sides: the Processing System (PS), an ARM Cortex-A9 CPU running Linux and Python, and the Programmable Logic (PL), the FPGA fabric configured with a custom CNN accelerator.
 Vivado Block Design
@@ -42,7 +42,7 @@ DDR  →  HP0  →  axi_smc_hp0  →  DMA  →  CNN s_axis    (784 bytes in)
 CNN m_axis  →  DMA  →  axi_smc_hp0  →  HP0  →  DDR    (1 byte out)
 
 
-##What happens when you click Predict
+What happens when you click Predict
 
 
 
@@ -59,7 +59,7 @@ CNN m_axis  →  DMA  →  axi_smc_hp0  →  HP0  →  DDR    (1 byte out)
 –   The web app shows both predictions side by side — CPU (~360 ms, numpy) and FPGA (~8 ms, hardware) — with a live bar chart and a speedup factor of around 42×.
 
 
-##Hardware CNN timing (inside axis_cnn_mnist_0)
+Hardware CNN timing (inside axis_cnn_mnist_0)
 
 A counter FSM sequences the pipeline. All weights are ROM constants — nothing is loaded at runtime.
 Cycles   1 – 784  :  accept pixels, feed Conv1
@@ -68,7 +68,8 @@ Cycle  1279       :  m_axis_tvalid = HIGH  →  result ready
 Cycle  1280       :  reset, ready for next image
 
 
-##Results
+Results
+
 Software accuracy  ~96% 
 Hardware accuracy  ~90% 
 CPU inference  ~360 ms  (pure numpy on 32-bit ARM)
