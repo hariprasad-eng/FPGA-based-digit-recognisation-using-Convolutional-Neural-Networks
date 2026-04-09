@@ -19,6 +19,10 @@ Hardware Deployment on PYNQ-Z2
 The PYNQ-Z2 board contains a ZYNQ-7000 SoC — a chip with two tightly coupled sides: the Processing System (PS), an ARM Cortex-A9 CPU running Linux and Python, and the Programmable Logic (PL), the FPGA fabric configured with a custom CNN accelerator.
 Vivado Block Design
 
+All the verilog modules which are shared above are synthesised in vivado and then created a block diagram in it and extracted the (.bit) and (.hwh) file from vivado. PYNQ has special feature of running juyter notebooks on its own processor so that we can send our generated .bit file and using overloay library in python we loaded our entire design in our board. now we will send input data dynamically and predict them in hardware.
+
+
+
 Five IP blocks are wired together in Vivado to form a complete inference pipeline. Each one has a specific job:
 
 
