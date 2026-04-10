@@ -20,7 +20,7 @@ The PYNQ-Z2 board contains a ZYNQ-7000 SoC — a chip with two tightly coupled s
 
 ### Vivado Block Design
 
-All the Verilog modules shared above are synthesised in Vivado. A block diagram was created, and the `.bit` and `.hwh` files were extracted. PYNQ has a special feature of running Jupyter notebooks on its own processor, allowing us to send our generated `.bit` file and load the entire design onto the board using the `pynq.Overlay` library. Input data is then sent dynamically for hardware prediction.
+All the Verilog modules shared above are synthesised in Vivado. After synthesising packing all our modules into an ip and then connected our ip with ZYNQ processing ip. Also an intermediate ip DMA was also added for better communication between Processor and the PL part of the PYNQ board. After the block diagram is done run implementation and generate bitstream to extract  `.bit` and `.hwh` files. PYNQ has a special feature of running Jupyter notebooks on its own processor, allowing us to send our generated `.bit` file and load the entire design onto the board using the `pynq.Overlay` library. Input data is then sent dynamically for hardware prediction.
 
 Five IP blocks are wired together in Vivado to form a complete inference pipeline. Each one has a specific job:
 
